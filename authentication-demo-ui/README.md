@@ -12,8 +12,10 @@ This includes demonstration for below listed ID-Authentication scenarios:
 4. Multiple Iris Authentication
 5. Face Authentication
 6. OTP Genaration + Authentication
-7. Multi-Modality of Biometric Authentication - Fingerprint/Iris/Face
-8. Multi-factor Authentication - OTP + Biometrics
+7. Demographic Authentication (uses JSON input)
+8. Multi-Modality of Biometric Authentication - Fingerprint/Iris/Face
+9. Multi-factor Authentication - OTP + Biometrics
+10. EKYC Authentication
 
 ### Dependencies
 App dependencies are mentioned below.For all Kernel services refer to [commons repo](https://github.com/mosip/commons)
