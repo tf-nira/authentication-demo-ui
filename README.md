@@ -1,7 +1,6 @@
 # ID-Authentication Demo UI Application
 The demo Application for ID-Authentication, used to demonstrate the ID-Authentication services for some high level scenarios.
 
----
 ### About MOSIP
 To know about MOSIP check out our [Platform Documentation](https://github.com/mosip/mosip-docs/wiki)
 
