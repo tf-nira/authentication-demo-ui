@@ -46,19 +46,20 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.mosip.kernel</groupId>
-			<artifactId>kernel-keygenerator-bouncycastle</artifactId>
-			<version>1.2.0-rc2-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>io.mosip.kernel</groupId>
-			<artifactId>kernel-crypto-jce</artifactId>
-			<version>1.2.0-rc2-SNAPSHOT</version>
+		    <groupId>org.bitbucket.b_c</groupId>
+		    <artifactId>jose4j</artifactId>
+		    <version>0.6.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.mosip.kernel</groupId>
 			<artifactId>kernel-core</artifactId>
 			<version>1.2.0-rc2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>io.mosip.kernel</groupId>
+			<artifactId>kernel-keymanager-service</artifactId>
+			<version>1.2.0-rc2-SNAPSHOT</version>
+			<classifier>lib</classifier>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
