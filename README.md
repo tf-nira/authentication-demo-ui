@@ -30,8 +30,8 @@ The following command should be run in the project to build the application -
 `mvn clean install -Dgpg.skip=true`
 
 
-## Update Launch Script:
-Update the ID-Authentication-Demo-UI.bat` batch file as below
+## Update application launch script:
+Update the ID-Authentication-Demo-UI.bat` batch file as below:
 ```
 java -Dida.request.captureFinger.deviceId=finger-device-id -Dida.request.captureIris.deviceId=iris-device-id -Dida.request.captureFace.deviceId=face-device-id 
 -Dfinger.device.subid=device-sub-id -DmispLicenseKey=misplkey -DpartnerId=partnerId -DpartnerApiKey=partnerApiKey -DpartnerOrg=partnerOrganization
