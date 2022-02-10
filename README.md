@@ -21,8 +21,7 @@ This includes demonstration for below listed ID-Authentication scenarios:
 
 ## Dependencies
 App dependencies are mentioned below:
-* kernel-keygenerator-bouncycastle
-* kernel-crypto-jce
+* [kernel-keymanager-service](https://github.com/mosip/keymanager)
 * [kernel-core](https://github.com/mosip/commons/tree/master/kernel/kernel-core)
 
 ## Build
