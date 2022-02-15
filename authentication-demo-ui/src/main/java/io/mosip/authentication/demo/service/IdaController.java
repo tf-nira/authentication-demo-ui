@@ -821,9 +821,19 @@ public class IdaController {
 			System.out.println(authResponse.getBody());
 			if (authResponse.getStatusCode().is2xxSuccessful()) {
 				Map<String, Object> responseMap = (Map<String, Object>) authResponse.getBody().get("response");
-				boolean status = Objects.nonNull(responseMap)
-						? (boolean) responseMap.get(isEkycAuthType() ? "kycStatus" : "authStatus")
-						: false;
+				boolean status;
+				if (Objects.nonNull(responseMap)) {
+					Object key = isEkycAuthType() ? "kycStatus" : "authStatus";
+					Object statusVal = responseMap.get(key);
+					if (statusVal instanceof Boolean) {
+						status = (Boolean) statusVal;
+					} else {
+						status = false;
+					}
+				} else {
+					status = false;
+				}
+				
 				String response = status ? "Authentication Success" : "Authentication Failed";
 				if (status) {
 					if (isEkycAuthType()) {
@@ -957,14 +967,14 @@ public class IdaController {
 
 		SecretKey secretKey = cryptoUtil.genSecKey();
 
-		byte[] encryptedIdentityBlock = cryptoUtil.symmetricEncrypt(identityBlock.getBytes(), secretKey);
+		byte[] encryptedIdentityBlock = cryptoUtil.symmetricEncrypt(identityBlock.getBytes(StandardCharsets.UTF_8), secretKey);
 		encryptionResponseDto.setEncryptedIdentity(Base64.encodeBase64URLSafeString(encryptedIdentityBlock));
 
 		X509Certificate certificate = getCertificate(identityBlock, isInternal);
 		PublicKey publicKey = certificate.getPublicKey();
 		byte[] encryptedSessionKeyByte = cryptoUtil.asymmetricEncrypt((secretKey.getEncoded()), publicKey);
 		encryptionResponseDto.setEncryptedSessionKey(Base64.encodeBase64URLSafeString(encryptedSessionKeyByte));
-		byte[] byteArr = cryptoUtil.symmetricEncrypt(HMACUtils2.digestAsPlainText(identityBlock.getBytes()).getBytes(),
+		byte[] byteArr = cryptoUtil.symmetricEncrypt(HMACUtils2.digestAsPlainText(identityBlock.getBytes(StandardCharsets.UTF_8)).getBytes(),
 				secretKey);
 		encryptionResponseDto.setRequestHMAC(Base64.encodeBase64URLSafeString(byteArr));
 
@@ -982,13 +992,7 @@ public class IdaController {
 			throws KeyManagementException, RestClientException, NoSuchAlgorithmException, CertificateException {
 		RestTemplate restTemplate = createTemplate();
 
-		CryptomanagerRequestDto request = new CryptomanagerRequestDto();
-		request.setApplicationId("IDA");
-		request.setData(Base64.encodeBase64URLSafeString(data.getBytes(StandardCharsets.UTF_8)));
 		String publicKeyId = env.getProperty("ida.reference.id");
-		request.setReferenceId(publicKeyId);
-		String utcTime = getUTCCurrentDateTimeISOString();
-		request.setTimeStamp(utcTime);
 		Map<String, String> uriParams = new HashMap<>();
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(env.getProperty("ida.certificate.url"))
 				.queryParam("applicationId", "IDA").queryParam("referenceId", publicKeyId);
