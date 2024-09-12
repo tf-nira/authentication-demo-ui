@@ -245,7 +245,7 @@ public class IdaController {
 	private void initialize() {
 		responsetextField.setText(null);
 
-		ObservableList<String> idTypeChoices = FXCollections.observableArrayList("UIN", "VID", "USERID");
+		ObservableList<String> idTypeChoices = FXCollections.observableArrayList("UIN", "VID", "USERID", "HANDLE");
 		ObservableList<String> fingerCountChoices = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7",
 				"8", "9", "10");
 		fingerCount.setItems(fingerCountChoices);
@@ -686,7 +686,7 @@ public class IdaController {
 		otpRequestDTO.setId("mosip.identity.otp");
 		otpRequestDTO.setIndividualId(idValue.getText());
 		otpRequestDTO.setIndividualIdType(idTypebox.getValue());
-		otpRequestDTO.setOtpChannel(Collections.singletonList("email"));
+		otpRequestDTO.setOtpChannel(Collections.unmodifiableList(Arrays.asList("email", "phone")));
 		otpRequestDTO.setRequestTime(getUTCCurrentDateTimeISOString());
 		otpRequestDTO.setTransactionID(getTransactionID());
 		otpRequestDTO.setVersion("1.0");
