@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -678,13 +679,18 @@ public class IdaController {
 		return result;
 	}
 
+	private String getNormalizedIndividualId() {
+		String id = idValue.getText();
+		return id == null ? null : id.trim().toLowerCase(Locale.ROOT);
+	}
+
 	@SuppressWarnings("rawtypes")
 	@FXML
 	private void onRequestOtp() {
 		responsetextField.setText(null);
 		OtpRequestDTO otpRequestDTO = new OtpRequestDTO();
 		otpRequestDTO.setId("mosip.identity.otp");
-		otpRequestDTO.setIndividualId(idValue.getText());
+		otpRequestDTO.setIndividualId(getNormalizedIndividualId());
 		otpRequestDTO.setIndividualIdType(idTypebox.getValue());
 		otpRequestDTO.setOtpChannel(Collections.unmodifiableList(Arrays.asList("email", "phone")));
 		otpRequestDTO.setRequestTime(getUTCCurrentDateTimeISOString());
@@ -756,7 +762,7 @@ public class IdaController {
 			authRequestDTO.setIndividualIdType(idTypebox.getValue());
 		}
 		// set Individual Id
-		authRequestDTO.setIndividualId(idValue.getText());
+		authRequestDTO.setIndividualId(getNormalizedIndividualId());
 		
 		authRequestDTO.setEnv(env.getProperty("ida.request.captureFinger.env"));
 		authRequestDTO.setDomainUri(env.getProperty("ida.request.captureFinger.domainUri"));
